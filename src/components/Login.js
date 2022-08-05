@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 import getApitrivia from '../helper/getApiTrivia';
 
@@ -26,10 +26,7 @@ export default class Login extends Component {
   }
 
   handleButton = async () => {
-    const { history } = this.props;
     const { token } = await getApitrivia();
-    history.push('/game');
-
     localStorage.setItem('token', token);
   }
 
@@ -55,14 +52,16 @@ export default class Login extends Component {
             data-testid="input-gravatar-email"
             onChange={ this.handleChange }
           />
-          <button
-            type="button"
-            data-testid="btn-play"
-            disabled={ button }
-            onClick={ this.handleButton }
-          >
-            Play
-          </button>
+          <Link to="/game">
+            <button
+              type="button"
+              data-testid="btn-play"
+              disabled={ button }
+              onClick={ this.handleButton }
+            >
+              Play
+            </button>
+          </Link>
           <Link to="/settings">
             <button
               type="button"
@@ -77,6 +76,6 @@ export default class Login extends Component {
   }
 }
 
-Login.propTypes = {
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
-};
+// Login.propTypes = {
+//   history: PropTypes.objectOf(PropTypes.any).isRequired,
+// };
