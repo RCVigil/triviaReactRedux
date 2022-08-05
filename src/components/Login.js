@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+import getApitrivia from '../helper/getApiTrivia';
 
 export default class Login extends Component {
   state = {
@@ -21,8 +25,12 @@ export default class Login extends Component {
     return !(userName.length && userEmail.length);
   }
 
-  handleButton = () => {
+  handleButton = async () => {
+    const { history } = this.props;
+    const { token } = await getApitrivia();
+    history.push('/game');
 
+    localStorage.setItem('token', token);
   }
 
   // validarEmail = (email) => {
@@ -55,8 +63,20 @@ export default class Login extends Component {
           >
             Play
           </button>
+          <Link to="/settings">
+            <button
+              type="button"
+              data-testid="btn-settings"
+            >
+              Configurações
+            </button>
+          </Link>
         </form>
       </div>
     );
   }
 }
+
+Login.propTypes = {
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+};
