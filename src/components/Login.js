@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import getApitrivia from '../helper/getApiTrivia';
+import { actionAddUser } from '../redux/actions/action';
 
-export default class Login extends Component {
+class Login extends Component {
   state = {
     userName: '',
     userEmail: '',
@@ -26,8 +28,10 @@ export default class Login extends Component {
   }
 
   handleButton = async () => {
+    const { dispatch } = this.props;
     const { token } = await getApitrivia();
     localStorage.setItem('token', token);
+    dispatch(actionAddUser(this.state));
   }
 
   // validarEmail = (email) => {
@@ -43,11 +47,13 @@ export default class Login extends Component {
           <input
             type="text"
             name="userName"
+            placeholder="Name*"
             data-testid="input-player-name"
             onChange={ this.handleChange }
           />
           <input
             type="email"
+            placeholder="Email*"
             name="userEmail"
             data-testid="input-gravatar-email"
             onChange={ this.handleChange }
@@ -76,6 +82,8 @@ export default class Login extends Component {
   }
 }
 
-// Login.propTypes = {
-//   history: PropTypes.objectOf(PropTypes.any).isRequired,
-// };
+Login.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};
+
+export default connect()(Login);
