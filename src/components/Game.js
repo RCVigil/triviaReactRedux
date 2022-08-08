@@ -6,6 +6,7 @@ export default class Game extends Component {
   state = {
     questions: [],
     count: 0,
+    borderStyle: false,
   }
 
   async componentDidMount() {
@@ -45,8 +46,12 @@ export default class Game extends Component {
   }
 
   render() {
-    const { questions, count } = this.state;
-    console.log(questions);
+    const { questions, count, borderStyle } = this.state;
+
+    const normalStyle = { border: 'none' };
+    const correctStyle = { border: '3px solid rgb(6, 240, 15)' };
+    const wrongStyle = { border: '3px solid red' };
+
     return (
       <div>
         <Header />
@@ -71,6 +76,7 @@ export default class Game extends Component {
                     ...question.incorrect_answers])
                     .map((answer, index2) => (
                       <button
+                        style={ borderStyle ? correctStyle : normalStyle }
                         type="button"
                         key={ index2 }
                         data-testid={ answer === question.correct_answer
