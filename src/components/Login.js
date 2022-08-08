@@ -30,14 +30,9 @@ class Login extends Component {
   handleButton = async () => {
     const { dispatch } = this.props;
     const { token } = await getApitrivia();
-    localStorage.setItem('token', token);
     dispatch(actionAddUser(this.state));
+    localStorage.setItem('token', token);
   }
-
-  // validarEmail = (email) => {
-  //   const validEmail = /\S+@\S+\.\S+/;
-  //   return validEmail.test(email);
-  // }
 
   render() {
     const { button } = this.state;
