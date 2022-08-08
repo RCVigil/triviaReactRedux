@@ -6,6 +6,7 @@ export default class Game extends Component {
   state = {
     questions: [],
     count: 0,
+    borderStyle: true,
   }
 
   async componentDidMount() {
@@ -36,6 +37,21 @@ export default class Game extends Component {
   //   return !(verifyToken !== null && verifyToken.length === VALID_LENGTH_TOKEN);
   // }
 
+  clickButtonAnswer = (answer) => {
+    this.setState({
+      borderStyle: false,
+    });
+  }
+
+  mudarCor = (resposta, questão) => {
+    const correctStyle = { border: '3px solid rgb(6, 240, 15)' };
+    const wrongStyle = { border: '3px solid red' };
+    if (resposta === questão.correct_answer) {
+      return correctStyle;
+    }
+    return wrongStyle;
+  }
+
   shuffleArray(arr) {
     for (let i = arr.length - 1; i > 0; i -= 1) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -45,8 +61,9 @@ export default class Game extends Component {
   }
 
   render() {
-    const { questions, count } = this.state;
-    console.log(questions);
+    const { questions, count, borderStyle } = this.state;
+
+    const normalStyle = { border: 'none' };
 
     return (
       <div>
@@ -72,11 +89,15 @@ export default class Game extends Component {
                     ...question.incorrect_answers])
                     .map((answer, index2) => (
                       <button
+                        style={ (borderStyle)
+                          ? normalStyle
+                          : this.mudarCor(answer, question) }
                         type="button"
                         key={ index2 }
                         data-testid={ answer === question.correct_answer
                           ? 'correct-answer'
                           : `wrong-answer-${index2}` }
+                        onClick={ () => this.clickButtonAnswer(answer) }
                       >
                         { answer }
                       </button>
