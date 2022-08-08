@@ -13,6 +13,11 @@ class Login extends Component {
     button: true,
   }
 
+  async componentDidMount() {
+    const { token } = await getApitrivia();
+    localStorage.setItem('token', token);
+  }
+
   handleChange = ({ target }) => {
     const { name, value } = target;
     this.setState({
@@ -27,11 +32,9 @@ class Login extends Component {
     return !(userName.length && userEmail.length);
   }
 
-  handleButton = async () => {
+  handleButton = () => {
     const { dispatch } = this.props;
-    const { token } = await getApitrivia();
     dispatch(actionAddUser(this.state));
-    localStorage.setItem('token', token);
   }
 
   render() {
