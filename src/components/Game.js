@@ -36,6 +36,14 @@ export default class Game extends Component {
   //   return !(verifyToken !== null && verifyToken.length === VALID_LENGTH_TOKEN);
   // }
 
+  shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
   render() {
     const { questions, count } = this.state;
     console.log(questions);
@@ -43,7 +51,39 @@ export default class Game extends Component {
       <div>
         <Header />
         <div>
-          { questions.length > 0 && questions.find((valueQuestion, index) => index === count)}
+          { questions.length > 0 && questions.map((question, index) => (
+            index === count && (
+              <div key={ index }>
+                <p
+                  data-testid="question-category"
+                >
+                  {question.category}
+                </p>
+                <p
+                  data-testid="question-text"
+                >
+                  {question.question}
+                </p>
+                <div
+                  data-testid="answer-options"
+                >
+                  {this.shuffleArray([question.correct_answer,
+                    ...question.incorrect_answers])
+                    .map((answer, index2) => (
+                      <button
+                        type="button"
+                        key={ index2 }
+                        data-testid={ answer === question.correct_answer
+                          ? 'correct-answer'
+                          : `wrong-answer-${index2}` }
+                      >
+                        { answer }
+                      </button>
+                    ))}
+                </div>
+              </div>
+            )
+          ))}
         </div>
       </div>
     );
