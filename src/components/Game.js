@@ -17,14 +17,18 @@ export default class Game extends Component {
 
   async componentDidMount() {
     const { history } = this.props;
+    const { count } = this.state;
     const token = localStorage.getItem('token');
-
     const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
     const responseJson = await response.json();
 
-    responseJson.results.map((e) => this.setState({
-      arraySort: shuffleArray(e),
-    }));
+    responseJson.results.forEach((e, index) => {
+      if (index === count) {
+        this.setState({
+          arraySort: shuffleArray(e),
+        });
+      }
+    });
 
     this.setState({
       questions: responseJson.results,
@@ -39,21 +43,8 @@ export default class Game extends Component {
       this.setState((prevState) => ({
         timer: prevState.timer - 1,
       }));
-
-      console.log('estou rodando');
     }, ONE_SECOND);
   }
-
-  // shuffleArray = (arr) => {
-  //   const newArray = [arr.correct_answer,
-  //     ...arr.incorrect_answers];
-
-  //   for (let i = newArray.length - 1; i > 0; i -= 1) {
-  //     const j = Math.floor(Math.random() * (i + 1));
-  //     [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-  //   }
-  //   return newArray;
-  // }
 
   clickButtonAnswer = (answer, correctAnswer) => {
     let { assertions } = this.state;
@@ -67,7 +58,6 @@ export default class Game extends Component {
         assertions: assertions += 1,
       });
     }
-    // const seconds = Math.floor((30000 / 1000) % 60);
   }
 
   mudarCor = (resposta, correctAnswer) => {
@@ -79,8 +69,17 @@ export default class Game extends Component {
     return wrongStyle;
   }
 
+  funcSetButton = () => {
+    const { timer } = this.state;
+    if (timer <= 0) {
+      clearInterval(this.timerID);
+      return '0';
+    }
+    return timer;
+  }
+
   render() {
-    const { questions, count, borderStyle, timer, arraySort } = this.state;
+    const { questions, count, borderStyle, arraySort, timer } = this.state;
     const normalStyle = { border: 'none' };
 
     return (
@@ -91,7 +90,7 @@ export default class Game extends Component {
           <h1>
             Tempo
             {' '}
-            { timer }
+            { this.funcSetButton() }
             {' '}
           </h1>
 
@@ -114,6 +113,7 @@ export default class Game extends Component {
                   {arraySort
                     .map((answer, index2) => (
                       <button
+                        disabled={ timer === 0 }
                         style={ (borderStyle)
                           ? normalStyle
                           : this.mudarCor(answer, question.correct_answer) }
