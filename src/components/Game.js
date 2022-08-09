@@ -12,22 +12,20 @@ export default class Game extends Component {
     borderStyle: true,
     assertions: 0,
     timer: 30,
-    arraySort: [],
+    randomAnswer: [],
   }
 
   async componentDidMount() {
     const { history } = this.props;
-    const { count } = this.state;
     const token = localStorage.getItem('token');
     const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
     const responseJson = await response.json();
 
-    responseJson.results.forEach((e, index) => {
-      if (index === count) {
-        this.setState({
-          arraySort: shuffleArray(e),
-        });
-      }
+    const arrOfRandonAnswer = responseJson.results
+      .map((result) => ([...shuffleArray(result)]));
+
+    this.setState({
+      randomAnswer: arrOfRandonAnswer,
     });
 
     this.setState({
@@ -79,7 +77,7 @@ export default class Game extends Component {
   }
 
   render() {
-    const { questions, count, borderStyle, arraySort, timer } = this.state;
+    const { questions, count, borderStyle, randomAnswer, timer } = this.state;
     const normalStyle = { border: 'none' };
 
     return (
@@ -110,24 +108,25 @@ export default class Game extends Component {
                 <div
                   data-testid="answer-options"
                 >
-                  {arraySort
-                    .map((answer, index2) => (
+                  {randomAnswer.map((answers, index2) => index2 === count && (
+                    answers.map((answer, index3) => (
                       <button
                         disabled={ timer === 0 }
                         style={ (borderStyle)
                           ? normalStyle
                           : this.mudarCor(answer, question.correct_answer) }
                         type="button"
-                        key={ index2 }
+                        key={ index3 }
                         data-testid={ answer === question.correct_answer
                           ? 'correct-answer'
-                          : `wrong-answer-${index2}` }
+                          : `wrong-answer-${index3}` }
                         onClick={ () => this.clickButtonAnswer(answer,
                           question.correct_answer) }
                       >
                         { answer }
                       </button>
-                    ))}
+                    ))
+                  ))}
                 </div>
               </div>
             )
