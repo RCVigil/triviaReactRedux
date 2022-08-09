@@ -13,11 +13,6 @@ class Login extends Component {
     button: true,
   }
 
-  async componentDidMount() {
-    const { token } = await getApitrivia();
-    localStorage.setItem('token', token);
-  }
-
   handleChange = ({ target }) => {
     const { name, value } = target;
     this.setState({
@@ -32,9 +27,12 @@ class Login extends Component {
     return !(userName.length && userEmail.length);
   }
 
-  handleButton = () => {
-    const { dispatch } = this.props;
+  handleButton = async () => {
+    const { dispatch, history } = this.props;
     dispatch(actionAddUser(this.state));
+    const { token } = await getApitrivia();
+    localStorage.setItem('token', token);
+    history.push('/game');
   }
 
   render() {
@@ -56,16 +54,14 @@ class Login extends Component {
             data-testid="input-gravatar-email"
             onChange={ this.handleChange }
           />
-          <Link to="/game">
-            <button
-              type="button"
-              data-testid="btn-play"
-              disabled={ button }
-              onClick={ this.handleButton }
-            >
-              Play
-            </button>
-          </Link>
+          <button
+            type="button"
+            data-testid="btn-play"
+            disabled={ button }
+            onClick={ this.handleButton }
+          >
+            Play
+          </button>
           <Link to="/settings">
             <button
               type="button"
@@ -82,6 +78,7 @@ class Login extends Component {
 
 Login.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  history: PropTypes.func.isRequired,
 };
 
 export default connect()(Login);
