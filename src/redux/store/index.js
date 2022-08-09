@@ -2,9 +2,9 @@ import { legacy_createStore as createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 
-import playerReducer from '../reducers/player';
+import rootReducer from '../reducers/player';
 
-const store = createStore(playerReducer, composeWithDevTools(applyMiddleware(thunk)));
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
 
 if (window.Cypress) {
   window.store = store;

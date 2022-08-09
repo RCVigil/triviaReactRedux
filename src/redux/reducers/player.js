@@ -1,4 +1,5 @@
-import { ADD_USER } from '../actions/action';
+import { combineReducers } from 'redux';
+import { ADD_USER, SCORE } from '../actions/action';
 
 const INITIAL_STATE = {
   name: '',
@@ -15,9 +16,15 @@ const playerReducer = (state = INITIAL_STATE, action) => {
       name: user.userName,
       gravatarEmail: user.userEmail,
     };
+  case SCORE:
+    return { ...state,
+      score: state.score + action.score,
+    };
   default:
     return state;
   }
 };
 
-export default playerReducer;
+const rootReducer = combineReducers({ player: playerReducer });
+
+export default rootReducer;

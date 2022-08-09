@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from './Header';
 import shuffleArray from '../helper/randomArray';
+import { actionScore } from '../redux/actions/action';
 
 const ONE_SECOND = 1000;
 
-export default class Game extends Component {
+class Game extends Component {
   state = {
     questions: [],
     count: 0,
@@ -41,7 +43,32 @@ export default class Game extends Component {
     }, ONE_SECOND);
   }
 
-  clickButtonAnswer = (answer, correctAnswer) => {
+  calculateScore = (difficulty) => {
+    const { timer } = this.state;
+
+    const score = { pattern: 10,
+      hard: 3,
+      medium: 2,
+      easy: 1 };
+
+    const scoreDificult = () => {
+      switch (difficulty) {
+      case 'hard':
+        return score.hard;
+      case 'medium':
+        return score.medium;
+      case 'easy':
+        return score.easy;
+      default:
+        break;
+      }
+    };
+
+    return (score.pattern + scoreDificult() + timer);
+  }
+
+  clickButtonAnswer = (answer, correctAnswer, difficulty) => {
+    const { dispatchScore } = this.props;
     let { assertions } = this.state;
 
     this.setState({
@@ -52,6 +79,7 @@ export default class Game extends Component {
       this.setState({
         assertions: assertions += 1,
       });
+      dispatchScore(this.calculateScore(difficulty));
     }
   }
 
@@ -118,7 +146,7 @@ export default class Game extends Component {
                           ? 'correct-answer'
                           : `wrong-answer-${index3}` }
                         onClick={ () => this.clickButtonAnswer(answer,
-                          question.correct_answer) }
+                          question.correct_answer, question.difficulty) }
                       >
                         { answer }
                       </button>
@@ -134,8 +162,15 @@ export default class Game extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  dispatchScore: (score) => dispatch(actionScore(score)),
+});
+
 Game.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  dispatchScore: PropTypes.func.isRequired,
 };
+
+export default connect(null, mapDispatchToProps)(Game);
