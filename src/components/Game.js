@@ -104,12 +104,19 @@ class Game extends Component {
   }
 
   changeCount = () => {
+    const { count } = this.state;
+    const { history } = this.props;
+    const NUM_COUNT = 4;
     this.setState((prevState) => ({
       count: prevState.count + 1,
       buttonNext: false,
       borderStyle: true,
       timer: 30,
     }));
+    if (count >= NUM_COUNT) {
+      history.push('/feedback');
+      console.log('entrei');
+    }
   }
 
   render() {
