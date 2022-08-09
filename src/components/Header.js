@@ -23,12 +23,10 @@ class Header extends Component {
             {' '}
             {nameUser}
           </p>
-          <p
-            data-testid="header-score"
-          >
+          <p>
             Total
             {' '}
-            {total}
+            <span data-testid="header-score">{total}</span>
           </p>
         </header>
       </div>
