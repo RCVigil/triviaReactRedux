@@ -15,6 +15,7 @@ class Game extends Component {
     assertions: 0,
     timer: 30,
     randomAnswer: [],
+    buttonNext: false,
   }
 
   async componentDidMount() {
@@ -73,6 +74,7 @@ class Game extends Component {
 
     this.setState({
       borderStyle: false,
+      buttonNext: true,
     });
 
     if (answer === correctAnswer) {
@@ -101,8 +103,17 @@ class Game extends Component {
     return timer;
   }
 
+  changeCount = () => {
+    this.setState((prevState) => ({
+      count: prevState.count + 1,
+      buttonNext: false,
+      borderStyle: true,
+      timer: 30,
+    }));
+  }
+
   render() {
-    const { questions, count, borderStyle, randomAnswer, timer } = this.state;
+    const { questions, count, borderStyle, randomAnswer, timer, buttonNext } = this.state;
     const normalStyle = { border: 'none' };
 
     return (
@@ -136,7 +147,7 @@ class Game extends Component {
                   {randomAnswer.map((answers, index2) => index2 === count && (
                     answers.map((answer, index3) => (
                       <button
-                        disabled={ timer === 0 }
+                        disabled={ timer === 0 || buttonNext === true }
                         style={ (borderStyle)
                           ? normalStyle
                           : this.mudarCor(answer, question.correct_answer) }
@@ -153,6 +164,15 @@ class Game extends Component {
                     ))
                   ))}
                 </div>
+                {buttonNext && (
+                  <button
+                    type="button"
+                    data-testid="btn-next"
+                    onClick={ this.changeCount }
+                  >
+                    Next
+                  </button>
+                )}
               </div>
             )
           ))}
