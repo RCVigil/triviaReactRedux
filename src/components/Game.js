@@ -25,11 +25,8 @@ export default class Game extends Component {
       .map((result) => ([...shuffleArray(result)]));
 
     this.setState({
-      randomAnswer: arrOfRandonAnswer,
-    });
-
-    this.setState({
       questions: responseJson.results,
+      randomAnswer: arrOfRandonAnswer,
     });
 
     if (responseJson.response_code !== 0) {
