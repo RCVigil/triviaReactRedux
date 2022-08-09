@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from './Header';
 import shuffleArray from '../helper/randomArray';
-import { actionScore } from '../redux/actions/action';
+import { actionAssertions, actionScore } from '../redux/actions/action';
 
 const ONE_SECOND = 1000;
 
@@ -42,6 +42,12 @@ class Game extends Component {
         timer: prevState.timer - 1,
       }));
     }, ONE_SECOND);
+  }
+
+  componentWillUnmount() {
+    const { assertions } = this.state;
+    const { dispatchAssertions } = this.props;
+    dispatchAssertions(assertions);
   }
 
   calculateScore = (difficulty) => {
@@ -191,6 +197,7 @@ class Game extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchScore: (score) => dispatch(actionScore(score)),
+  dispatchAssertions: (assertion) => dispatch(actionAssertions(assertion)),
 });
 
 Game.propTypes = {

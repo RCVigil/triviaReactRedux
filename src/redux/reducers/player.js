@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import { ADD_USER, SCORE } from '../actions/action';
+import { ADD_USER, ASSERTIONS, SCORE } from '../actions/action';
 
 const INITIAL_STATE = {
   name: '',
-  assertions: '',
+  assertions: 0,
   score: 0,
   gravatarEmail: '',
 };
@@ -19,6 +19,10 @@ const playerReducer = (state = INITIAL_STATE, action) => {
   case SCORE:
     return { ...state,
       score: state.score + action.score,
+    };
+  case ASSERTIONS:
+    return { ...state,
+      assertions: action.assertion,
     };
   default:
     return state;

@@ -5,8 +5,9 @@ import PropTypes from 'prop-types';
 
 class Header extends Component {
   render() {
-    const { email, nameUser, total } = this.props;
+    const { email, nameUser, total, assertions } = this.props;
     const emailUser = md5(email).toString();
+    const MIN_ASSERTIONS = 3;
     const url = `https://www.gravatar.com/avatar/${emailUser}`;
     return (
       <div>
@@ -28,6 +29,9 @@ class Header extends Component {
             {' '}
             <span data-testid="header-score">{total}</span>
           </p>
+          <h3 data-testid="feedback-text">
+            {assertions < MIN_ASSERTIONS ? 'Could be better...' : 'Well Done!'}
+          </h3>
         </header>
       </div>
     );
@@ -44,6 +48,7 @@ const mapStateToProps = (state) => ({
   email: state.player.gravatarEmail,
   nameUser: state.player.name,
   total: state.player.score,
+  assertions: state.player.assertions,
 });
 
 export default connect(mapStateToProps)(Header);
