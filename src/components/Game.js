@@ -22,14 +22,6 @@ export default class Game extends Component {
     const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
     const responseJson = await response.json();
 
-    responseJson.results.forEach((e, index) => {
-      if (index === count) {
-        this.setState({
-          arraySort: shuffleArray(e),
-        });
-      }
-    });
-
     this.setState({
       questions: responseJson.results,
     });
