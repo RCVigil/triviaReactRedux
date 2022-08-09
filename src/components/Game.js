@@ -205,6 +205,7 @@ Game.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   dispatchScore: PropTypes.func.isRequired,
+  dispatchAssertions: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Game);
