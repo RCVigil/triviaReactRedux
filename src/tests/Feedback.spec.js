@@ -21,9 +21,8 @@ const player2 = {
   url: "https://www.gravatar.com/avatar/ce11fce876c93ed5d2a72da660496473",
 };
 
-describe('Testar Feedbackin', () => {
+describe('Testar Feedback', () => {
   it('Se é renderizado os components na tela', () => {
-    // const { pathname } = history.location;
 
     const obj = {
       name: "Hugo",
@@ -55,18 +54,17 @@ describe('Testar Feedbackin', () => {
     expect(buttonRanking).toBeInTheDocument();
     
     userEvent.click(buttonRanking);
-    screen.logTestingPlaygroundURL();
   });
 
-  it('Se é renderizado os components na tela', () => {
-    // const { pathname } = history.location;
+  it('Se é redirecionado para tela de Login', () => {
     localStorage.clear();
-    renderWithRouterAndRedux(<App />, { player: player2 }, "/feedback");
-
+    const { history } = renderWithRouterAndRedux(<App />, { player: player2 }, "/feedback");
+    
     const buttonPlayAgain = screen.getByRole('button', { name: /play again/i });
     expect(buttonPlayAgain).toBeInTheDocument();
     userEvent.click(buttonPlayAgain);
 
-    screen.logTestingPlaygroundURL();
+    const { pathname } = history.location;
+    expect(pathname).toEqual("/");
   });
 });
