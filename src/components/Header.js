@@ -18,12 +18,10 @@ class Header extends Component {
             src={ url }
             alt={ nameUser }
           />
-          <p
-            data-testid="header-player-name"
-          >
+          <p>
             Name User
             {' '}
-            {nameUser}
+            <span data-testid="header-player-name">{nameUser}</span>
           </p>
           <p>
             Total
