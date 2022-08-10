@@ -42,4 +42,7 @@ describe('Testar Login', () => {
         userEvent.type(inputEmail, 'Valido');
         expect(btnPlay).toHaveProperty("disabled", false);
     });
+    it('Se ao clicar no botão play, a função "handleButton" é chamada', () => {
+        renderWithRouterAndRedux(<App />);
+    });
 });
