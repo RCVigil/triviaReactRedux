@@ -7,7 +7,6 @@ import Header from './Header';
 
 class Feedback extends Component {
   componentDidMount() {
-    console.log('DidMount');
     if (localStorage.getItem('ranking')) {
       this.setNewItem();
     } else {
@@ -25,7 +24,6 @@ class Feedback extends Component {
     const arr = [obj];
     const jsonArr = JSON.stringify(arr);
     localStorage.setItem('ranking', jsonArr);
-    console.log('Sem item');
   }
 
   setNewItem = () => {

@@ -23,10 +23,6 @@ const playerReducer = (state = INITIAL_STATE, action) => {
     };
   case URL_PICTURE:
     return { ...state, url };
-  // case ASSERTIONS:
-  //   return { ...state,
-  //     assertions: action.assertion,
-  //   };
   case RESET_SCORE:
     return INITIAL_STATE;
   default:

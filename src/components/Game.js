@@ -12,7 +12,6 @@ class Game extends Component {
     questions: [],
     count: 0,
     borderStyle: true,
-    // assertions: 0,
     timer: 30,
     randomAnswer: [],
     buttonNext: false,
@@ -48,39 +47,7 @@ class Game extends Component {
     }, ONE_SECOND);
   }
 
-  // componentWillUnmount() {
-  //   const { assertions } = this.state;
-  //   const { dispatchAssertions } = this.props;
-  //   dispatchAssertions(assertions);
-  // }
-
-  // calculateScore = (difficulty) => {
-  //   const { timer } = this.state;
-
-  //   const score = { pattern: 10,
-  //     hard: 3,
-  //     medium: 2,
-  //     easy: 1 };
-
-  //   const scoreDificult = () => {
-  //     switch (difficulty) {
-  //     case 'hard':
-  //       return score.hard;
-  //     case 'medium':
-  //       return score.medium;
-  //     case 'easy':
-  //       return score.easy;
-  //     default:
-  //       break;
-  //     }
-  //   };
-
-  //   return (score.pattern + scoreDificult() + timer);
-  // }
-
   clickButtonAnswer = (answer, correctAnswer, difficulty) => {
-    // const { dispatchScore } = this.props;
-    // let { assertions } = this.state;
     clearInterval(this.timerID);
     const { dispatch } = this.props;
 
@@ -94,11 +61,6 @@ class Game extends Component {
       const sum = 10;
       const role = { hard: 3, medium: 2, easy: 1 };
       const scoreTotal = sum + (timer * role[difficulty]);
-      // this.setState({
-      //   assertions: assertions += 1,
-      // });
-      // dispatchScore(this.calculateScore(difficulty));
-
       dispatch(actionScore(scoreTotal, 1));
     }
   }
@@ -206,17 +168,10 @@ class Game extends Component {
   }
 }
 
-// const mapDispatchToProps = (dispatch) => ({
-//   dispatchScore: (score) => dispatch(actionScore(score)),
-//   dispatchAssertions: (assertion) => dispatch(actionAssertions(assertion)),
-// });
-
 Game.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }),
-  // dispatchScore: PropTypes.func.isRequired,
-  // dispatchAssertions: PropTypes.func.isRequired,
   dispatch: PropTypes.func,
 }.isRequired;
 
