@@ -13,10 +13,27 @@ const player = {
   url: "https://www.gravatar.com/avatar/ce11fce876c93ed5d2a72da660496473",
 };
 
+const player2 = {
+  name: "Hugo",
+  assertions: 4,
+  score: 109,
+  gravatarEmail: "teste@teste.com",
+  url: "https://www.gravatar.com/avatar/ce11fce876c93ed5d2a72da660496473",
+};
+
 describe('Testar Feedbackin', () => {
   it('Se é renderizado os components na tela', () => {
-    renderWithRouterAndRedux(<App />, { player }, "/feedback");
     // const { pathname } = history.location;
+
+    const obj = {
+      name: "Hugo",
+      score: 109,
+      picture: "https://www.gravatar.com/avatar/ce11fce876c93ed5d2a72da660496473",
+    };
+    const arr = [obj];
+    const jsonArr = JSON.stringify(arr);
+    localStorage.setItem('ranking', jsonArr);
+    renderWithRouterAndRedux(<App />, { player }, "/feedback");
 
     const feedbackText = screen.getByRole('heading', { name: /feedback/i })
     expect(feedbackText).toBeInTheDocument();
@@ -34,22 +51,22 @@ describe('Testar Feedbackin', () => {
     expect(punctuationText.length).toBe(2);
     const buttonPlayAgain = screen.getByRole('button', { name: /play again/i });
     expect(buttonPlayAgain).toBeInTheDocument();
-    const buttonRankingAgain = screen.getByRole('button', { name: /ranking/i });
-    expect(buttonRankingAgain).toBeInTheDocument();
+    const buttonRanking = screen.getByRole('button', { name: /ranking/i });
+    expect(buttonRanking).toBeInTheDocument();
     
+    userEvent.click(buttonRanking);
     screen.logTestingPlaygroundURL();
-      // const inputEmail = screen.getByTestId('input-gravatar-email');
-      // const inputName = screen.getByTestId('input-player-name');
-      // expect(inputName).toBeInTheDocument();
-      // const btnPlay = screen.getByTestId('btn-play');
-      // expect(btnPlay).toBeInTheDocument();
+  });
 
-      // // Quando name estiver vazio, o botão deve haver a propriedade disabled
-      // userEvent.type(inputEmail, 'Valido');
-      // expect(btnPlay).toHaveProperty("disabled", true);
+  it('Se é renderizado os components na tela', () => {
+    // const { pathname } = history.location;
+    localStorage.clear();
+    renderWithRouterAndRedux(<App />, { player: player2 }, "/feedback");
 
-      // // Quando tudo estiver preenchido corretamente, o botão não deve a propriedade disabled
-      // userEvent.type(inputName, 'Valido');
-      // expect(btnPlay).toHaveProperty("disabled", false);
+    const buttonPlayAgain = screen.getByRole('button', { name: /play again/i });
+    expect(buttonPlayAgain).toBeInTheDocument();
+    userEvent.click(buttonPlayAgain);
+
+    screen.logTestingPlaygroundURL();
   });
 });
