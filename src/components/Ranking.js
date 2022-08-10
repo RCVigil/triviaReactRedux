@@ -51,8 +51,10 @@ class Ranking extends Component {
 }
 
 Ranking.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  history: PropTypes.func.isRequired,
-};
+  dispatch: PropTypes.func,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
+}.isRequired;
 
 export default connect()(Ranking);

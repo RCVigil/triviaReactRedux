@@ -22,9 +22,7 @@ const playerReducer = (state = INITIAL_STATE, action) => {
       assertions: state.assertions + acerto,
     };
   case URL_PICTURE:
-    return { ...state,
-      gravatarEmail: url,
-    };
+    return { ...state, url };
   // case ASSERTIONS:
   //   return { ...state,
   //     assertions: action.assertion,
