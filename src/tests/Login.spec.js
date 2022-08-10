@@ -5,10 +5,10 @@ import App from '../App';
 import Login from '../components/Login';
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
 
-const INITIAL_STATE = {
+const INITIAL_STATE = { player : {
     name: 'valido',
     gravatarEmail: 'hehe'
-}
+}}
 
 describe('Testar Login', () => {
     it('Se é desabilitado o botão play, quando o inputName ou IputEmail estiver vazio', () => {
@@ -29,13 +29,8 @@ describe('Testar Login', () => {
         expect(btnPlay).toHaveProperty("disabled", false);
     });
     
-    it('', async () => {
-        const STATE = {token: '6a190b20f637bae6d0c4841364b563862044b3e304258380af2581d69728e1c9'};
-        jest.spyOn(global, 'fetch');
-        global.fetch.mockResolvedValue({
-            json: jest.fn().mockResolvedValue(STATE),
-        });
-        renderWithRouterAndRedux(<Login />, { initialState: INITIAL_STATE });
+    it('Se é habilitado o botão play, quando o inputName ou IputEmail estiverem', () => {
+        renderWithRouterAndRedux(<App />);
         const inputEmail = screen.getByTestId('input-gravatar-email');
         expect(inputEmail).toBeInTheDocument();
         const inputName = screen.getByTestId('input-player-name');
@@ -45,6 +40,6 @@ describe('Testar Login', () => {
 
         userEvent.type(inputName, 'Valido');
         userEvent.type(inputEmail, 'Valido');
-        userEvent.click(btnPlay);
+        expect(btnPlay).toHaveProperty("disabled", false);
     });
 });
