@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actionResetScore } from '../redux/actions/action';
@@ -48,5 +49,10 @@ class Ranking extends Component {
     );
   }
 }
+
+Ranking.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  history: PropTypes.func.isRequired,
+};
 
 export default connect()(Ranking);
