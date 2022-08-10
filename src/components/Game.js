@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from './Header';
 import shuffleArray from '../helper/randomArray';
-import { actionAssertions, actionScore } from '../redux/actions/action';
+import { actionScore } from '../redux/actions/action';
 
 const ONE_SECOND = 1000;
 
@@ -12,7 +12,7 @@ class Game extends Component {
     questions: [],
     count: 0,
     borderStyle: true,
-    assertions: 0,
+    // assertions: 0,
     timer: 30,
     randomAnswer: [],
     buttonNext: false,
@@ -44,39 +44,41 @@ class Game extends Component {
     }, ONE_SECOND);
   }
 
-  componentWillUnmount() {
-    const { assertions } = this.state;
-    const { dispatchAssertions } = this.props;
-    dispatchAssertions(assertions);
-  }
+  // componentWillUnmount() {
+  //   const { assertions } = this.state;
+  //   const { dispatchAssertions } = this.props;
+  //   dispatchAssertions(assertions);
+  // }
 
-  calculateScore = (difficulty) => {
-    const { timer } = this.state;
+  // calculateScore = (difficulty) => {
+  //   const { timer } = this.state;
 
-    const score = { pattern: 10,
-      hard: 3,
-      medium: 2,
-      easy: 1 };
+  //   const score = { pattern: 10,
+  //     hard: 3,
+  //     medium: 2,
+  //     easy: 1 };
 
-    const scoreDificult = () => {
-      switch (difficulty) {
-      case 'hard':
-        return score.hard;
-      case 'medium':
-        return score.medium;
-      case 'easy':
-        return score.easy;
-      default:
-        break;
-      }
-    };
+  //   const scoreDificult = () => {
+  //     switch (difficulty) {
+  //     case 'hard':
+  //       return score.hard;
+  //     case 'medium':
+  //       return score.medium;
+  //     case 'easy':
+  //       return score.easy;
+  //     default:
+  //       break;
+  //     }
+  //   };
 
-    return (score.pattern + scoreDificult() + timer);
-  }
+  //   return (score.pattern + scoreDificult() + timer);
+  // }
 
   clickButtonAnswer = (answer, correctAnswer, difficulty) => {
-    const { dispatchScore } = this.props;
-    let { assertions } = this.state;
+    // const { dispatchScore } = this.props;
+    // let { assertions } = this.state;
+    clearInterval(this.timerID);
+    const { dispatch } = this.props;
 
     this.setState({
       borderStyle: false,
@@ -84,16 +86,22 @@ class Game extends Component {
     });
 
     if (answer === correctAnswer) {
-      this.setState({
-        assertions: assertions += 1,
-      });
-      dispatchScore(this.calculateScore(difficulty));
+      const { timer } = this.state;
+      const sum = 10;
+      const role = { hard: 3, medium: 2, easy: 1 };
+      const scoreTotal = sum + (timer * role[difficulty]);
+      // this.setState({
+      //   assertions: assertions += 1,
+      // });
+      // dispatchScore(this.calculateScore(difficulty));
+
+      dispatch(actionScore(scoreTotal, 1));
     }
   }
 
   mudarCor = (resposta, correctAnswer) => {
-    const correctStyle = { border: '3px solid rgb(6, 240, 15)' };
-    const wrongStyle = { border: '3px solid red' };
+    const correctStyle = { border: '3px solid rgb(6, 240, 15)', margin: '2px' };
+    const wrongStyle = { border: '3px solid red', margin: '2px' };
     if (resposta === correctAnswer) {
       return correctStyle;
     }
@@ -121,13 +129,12 @@ class Game extends Component {
     }));
     if (count >= NUM_COUNT) {
       history.push('/feedback');
-      console.log('entrei');
     }
   }
 
   render() {
     const { questions, count, borderStyle, randomAnswer, timer, buttonNext } = this.state;
-    const normalStyle = { border: 'none' };
+    const normalStyle = { border: 'none', margin: '5px' };
 
     return (
       <div>
@@ -138,7 +145,6 @@ class Game extends Component {
             Tempo
             {' '}
             { this.funcSetButton() }
-            {' '}
           </h1>
 
           { questions.length > 0 && questions.map((question, index) => (
@@ -160,7 +166,7 @@ class Game extends Component {
                   {randomAnswer.map((answers, index2) => index2 === count && (
                     answers.map((answer, index3) => (
                       <button
-                        disabled={ timer === 0 || buttonNext === true }
+                        disabled={ timer === 0 || buttonNext }
                         style={ (borderStyle)
                           ? normalStyle
                           : this.mudarCor(answer, question.correct_answer) }
@@ -177,7 +183,7 @@ class Game extends Component {
                     ))
                   ))}
                 </div>
-                {buttonNext && (
+                { (timer === 0 || buttonNext) && (
                   <button
                     type="button"
                     data-testid="btn-next"
@@ -195,17 +201,18 @@ class Game extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  dispatchScore: (score) => dispatch(actionScore(score)),
-  dispatchAssertions: (assertion) => dispatch(actionAssertions(assertion)),
-});
+// const mapDispatchToProps = (dispatch) => ({
+//   dispatchScore: (score) => dispatch(actionScore(score)),
+//   dispatchAssertions: (assertion) => dispatch(actionAssertions(assertion)),
+// });
 
 Game.propTypes = {
   history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-  dispatchScore: PropTypes.func.isRequired,
-  dispatchAssertions: PropTypes.func.isRequired,
-};
+    push: PropTypes.func,
+  }),
+  // dispatchScore: PropTypes.func.isRequired,
+  // dispatchAssertions: PropTypes.func.isRequired,
+  dispatch: PropTypes.func,
+}.isRequired;
 
-export default connect(null, mapDispatchToProps)(Game);
+export default connect()(Game);

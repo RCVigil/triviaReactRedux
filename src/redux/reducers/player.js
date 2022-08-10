@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { ADD_USER, ASSERTIONS, RESET_SCORE, SCORE } from '../actions/action';
+import { ADD_USER, RESET_SCORE, SCORE } from '../actions/action';
 
 const INITIAL_STATE = {
   name: '',
@@ -9,7 +9,7 @@ const INITIAL_STATE = {
 };
 
 const playerReducer = (state = INITIAL_STATE, action) => {
-  const { user } = action;
+  const { user, score, acerto } = action;
   switch (action.type) {
   case ADD_USER:
     return { ...state,
@@ -18,12 +18,13 @@ const playerReducer = (state = INITIAL_STATE, action) => {
     };
   case SCORE:
     return { ...state,
-      score: state.score + action.score,
+      score: state.score + score,
+      assertions: state.assertions + acerto,
     };
-  case ASSERTIONS:
-    return { ...state,
-      assertions: action.assertion,
-    };
+  // case ASSERTIONS:
+  //   return { ...state,
+  //     assertions: action.assertion,
+  //   };
   case RESET_SCORE:
     return INITIAL_STATE;
   default:
