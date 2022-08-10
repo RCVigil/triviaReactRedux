@@ -37,6 +37,10 @@ class Game extends Component {
       history.push('/');
     }
 
+    this.timer();
+  }
+
+  timer = () => {
     this.timerID = setInterval(() => {
       this.setState((prevState) => ({
         timer: prevState.timer - 1,
@@ -130,6 +134,7 @@ class Game extends Component {
     if (count >= NUM_COUNT) {
       history.push('/feedback');
     }
+    this.timer();
   }
 
   render() {
