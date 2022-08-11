@@ -1,0 +1,46 @@
+/* .page-ranking {} */
+.btn-go-home {
+  border: none;
+  border-radius: 5px;
+  margin-top: 5px;
+  padding: 5px;
+}
+
+.btn-go-home:hover {
+  background-color: blue;
+  color: aliceblue;
+  cursor: pointer;
+}
+
+.page-ranking-div {
+  align-items: center;
+  border: 2px solid green;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+.div-ranking-player {
+  border: 1px solid red;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  padding: 10px;
+  width: 50%;
+}
+
+.img-player {
+  border-radius: 5px;
+  padding: 10px;
+  width: 100px;
+}
+
+.name-score-player {
+  align-items: flex-start;
+  border: 1px solid red;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  width: 80%;
+}

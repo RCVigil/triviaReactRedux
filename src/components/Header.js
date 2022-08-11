@@ -3,7 +3,7 @@ import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { actionUrl } from '../redux/actions/action';
-import './Header.css';
+import '../css/Header.css';
 
 class Header extends Component {
   render() {
@@ -21,7 +21,7 @@ class Header extends Component {
             alt={ nameUser }
           />
           <p className="user">
-            Name User
+            Player:
             {' '}
             <span data-testid="header-player-name">{nameUser}</span>
           </p>

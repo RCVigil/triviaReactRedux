@@ -23,6 +23,11 @@ class Game extends Component {
     const { history } = this.props;
     const responseJson = await objGetApi.getQuestionsApi();
 
+    if (responseJson.response_code !== 0) {
+      localStorage.removeItem('token');
+      history.push('/');
+    }
+
     const arrOfRandonAnswer = responseJson.results
       .map((result) => ([...shuffleArray(result)]));
 
@@ -30,12 +35,6 @@ class Game extends Component {
       questions: responseJson.results,
       randomAnswer: arrOfRandonAnswer,
     });
-
-    if (responseJson.response_code !== 0) {
-      localStorage.removeItem('token');
-      history.push('/');
-    }
-
     this.timer();
   }
 
