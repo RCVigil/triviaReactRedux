@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actionResetScore } from '../redux/actions/action';
+import '../css/Ranking.css';
 
 class Ranking extends Component {
   handleButton = () => {
@@ -14,34 +15,41 @@ class Ranking extends Component {
     const ranking = JSON.parse(localStorage.getItem('ranking'));
     const rankingSort = ranking.sort((a, b) => b.score - a.score);
     return (
-      <div>
+      <div className="page-ranking">
         <button
           type="button"
           data-testid="btn-go-home"
+          className="btn-go-home"
           onClick={ this.handleButton }
         >
           Go Home
         </button>
-        <div>
-          <h3 data-testid="ranking-title">Ranking</h3>
+        <h1 data-testid="ranking-title">Ranking</h1>
+        <div className="page-ranking-div">
           { rankingSort.map((player, index) => (
-            <div key={ index }>
-              <img src={ player.picture } alt={ player.name } />
-              <p>
-                Player:
-                {' '}
-                <span data-testid={ `player-name-${index}` }>
-                  {player.name}
-                </span>
-              </p>
+            <div className="div-ranking-player" key={ index }>
+              <img
+                src={ player.picture }
+                alt={ player.name }
+                className="img-player"
+              />
+              <div className="name-score-player">
+                <p>
+                  Player:
+                  {' '}
+                  <span data-testid={ `player-name-${index}` }>
+                    {player.name}
+                  </span>
+                </p>
 
-              <p>
-                Score:
-                {' '}
-                <span data-testid={ `player-score-${index}` }>
-                  {player.score}
-                </span>
-              </p>
+                <p>
+                  Score:
+                  {' '}
+                  <span data-testid={ `player-score-${index}` }>
+                    {player.score}
+                  </span>
+                </p>
+              </div>
             </div>
           ))}
         </div>

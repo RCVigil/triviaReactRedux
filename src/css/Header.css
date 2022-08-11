@@ -1,0 +1,26 @@
+* {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.Header {
+  align-items: center;
+  background-color: rgb(50, 167, 145);
+  border: 2px solid lightgray;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+img {
+  border-radius: 50px;
+  padding: 6px;
+  width: 75px;
+}
+
+.user {
+  color: white;
+  font-size: 20px;
+  padding: 6px;
+}
