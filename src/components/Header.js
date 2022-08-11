@@ -3,6 +3,7 @@ import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { actionUrl } from '../redux/actions/action';
+import './Header.css';
 
 class Header extends Component {
   render() {
@@ -12,18 +13,19 @@ class Header extends Component {
     dispatch(actionUrl(url));
     return (
       <div>
-        <header>
+        <header className="Header">
           <img
+            className="img"
             data-testid="header-profile-picture"
             src={ url }
             alt={ nameUser }
           />
-          <p>
+          <p className="user">
             Name User
             {' '}
             <span data-testid="header-player-name">{nameUser}</span>
           </p>
-          <p>
+          <p className="user">
             Total
             {' '}
             <span data-testid="header-score">{total}</span>
