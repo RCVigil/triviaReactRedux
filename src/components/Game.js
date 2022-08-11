@@ -159,6 +159,7 @@ class Game extends Component {
                     data-testid="btn-next"
                     onClick={ this.changeCount }
                   >
+
                     Next
                   </button>
                 )}
