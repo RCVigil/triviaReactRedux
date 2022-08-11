@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import getApitrivia from '../helper/getApiTrivia';
+import getTokenApi from '../helper/getTokenApi';
 import { actionAddUser } from '../redux/actions/action';
 
 class Login extends Component {
@@ -30,7 +30,7 @@ class Login extends Component {
   handleButton = async () => {
     const { dispatch, history } = this.props;
     dispatch(actionAddUser(this.state));
-    const { token } = await getApitrivia();
+    const { token } = await getTokenApi();
     localStorage.setItem('token', token);
     history.push('/game');
   }

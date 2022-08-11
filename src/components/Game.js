@@ -5,6 +5,8 @@ import Header from './Header';
 import shuffleArray from '../helper/randomArray';
 import { actionScore } from '../redux/actions/action';
 
+import objGetApi from '../helper/objGetApi';
+
 const ONE_SECOND = 1000;
 
 class Game extends Component {
@@ -19,9 +21,7 @@ class Game extends Component {
 
   async componentDidMount() {
     const { history } = this.props;
-    const token = localStorage.getItem('token');
-    const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
-    const responseJson = await response.json();
+    const responseJson = await objGetApi.getQuestionsApi();
 
     const arrOfRandonAnswer = responseJson.results
       .map((result) => ([...shuffleArray(result)]));
