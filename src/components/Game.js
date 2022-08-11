@@ -7,6 +7,8 @@ import { actionScore } from '../redux/actions/action';
 
 import objGetApi from '../helper/objGetApi';
 
+import './Game.css';
+
 const ONE_SECOND = 1000;
 
 class Game extends Component {
@@ -104,9 +106,9 @@ class Game extends Component {
     const normalStyle = { border: 'none', margin: '5px' };
 
     return (
-      <div>
+      <div className="game">
         <Header />
-        <div>
+        <div className="game_containner">
 
           <h1>
             Tempo
@@ -116,7 +118,7 @@ class Game extends Component {
 
           { questions.length > 0 && questions.map((question, index) => (
             index === count && (
-              <div key={ index }>
+              <div key={ index } className="answer_options">
                 <p
                   data-testid="question-category"
                 >
@@ -133,6 +135,7 @@ class Game extends Component {
                   {randomAnswer.map((answers, index2) => index2 === count && (
                     answers.map((answer, index3) => (
                       <button
+                        className="button"
                         disabled={ timer === 0 || buttonNext }
                         style={ (borderStyle)
                           ? normalStyle
@@ -152,6 +155,7 @@ class Game extends Component {
                 </div>
                 { (timer === 0 || buttonNext) && (
                   <button
+                    className="button"
                     type="button"
                     data-testid="btn-next"
                     onClick={ this.changeCount }
