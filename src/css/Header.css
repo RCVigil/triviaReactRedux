@@ -7,7 +7,7 @@
 .Header {
   align-items: center;
   background-color: rgb(50, 167, 145);
-  border: 2px solid lightgray;
+  border-bottom: 2px solid lightgray;
   display: flex;
   flex-direction: column;
   justify-content: center;

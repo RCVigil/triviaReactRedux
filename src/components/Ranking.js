@@ -24,7 +24,12 @@ class Ranking extends Component {
         >
           Go Home
         </button>
-        <h1 data-testid="ranking-title">Ranking</h1>
+        <h1
+          data-testid="ranking-title"
+          className="ranking-title"
+        >
+          Ranking
+        </h1>
         <div className="page-ranking-div">
           { rankingSort.map((player, index) => (
             <div className="div-ranking-player" key={ index }>

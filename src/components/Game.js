@@ -7,7 +7,7 @@ import { actionScore } from '../redux/actions/action';
 
 import objGetApi from '../helper/objGetApi';
 
-import './Game.css';
+import '../css/Game.css';
 
 const ONE_SECOND = 1000;
 
