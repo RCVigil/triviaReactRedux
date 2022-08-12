@@ -1,0 +1,77 @@
+.divDisplay {
+  background-color: #f4f4ed;
+  display: flex;
+  flex-direction: column;
+  height: 95vh;
+  margin-bottom: 45px;
+  overflow: auto;
+  width: 99%;
+}
+
+.classH1Feed {
+  color: #0b75b6;
+  font-family: 'Paprika';
+  font-size: 11vh;
+  font-variant: small-caps;
+  font-weight: 900;
+  padding: 0.5%;
+}
+
+.classP {
+  font-size: 4vh;
+  margin-top: 1%;
+}
+
+.classH2 {
+  font-size: 7vh;
+  margin-top: 1%;
+}
+
+.classH1 {
+  align-items: flex-end;
+  align-self: center;
+  bottom: 19%;
+  display: flex;
+  font-size: 8vh;
+  font-variant: small-caps;
+  gap: 30px;
+  justify-content: center;
+  padding: 5px;
+  position: absolute;
+  text-align: center;
+  width: 95%;
+}
+
+.divButton {
+  align-items: flex-end;
+  align-self: center;
+  bottom: 8%;
+  display: flex;
+  gap: 100px;
+  justify-content: center;
+  padding: 5px;
+  position: absolute;
+  text-align: center;
+  width: 95%;
+}
+
+.buttonClick {
+  align-content: flex-end;
+  background-color: transparent;
+  border-radius: 25px;
+  bottom: 0;
+  cursor: pointer;
+  height: 8vh;
+  padding: 10px;
+  width: 16vh;
+}
+
+.buttonClick:hover {
+  background-color: #32a791;
+  background-image: linear-gradient(#32a791 20%, rgba(0, 128, 0, 0.838) 30%, #32a791 50%, rgba(0, 128, 0, 0.392) 80%); /* efeito com transição suave */
+  border: 3px outset #32a791;
+  color: white;
+  font-size: 1.1em;
+  font-weight: 900;
+}
+

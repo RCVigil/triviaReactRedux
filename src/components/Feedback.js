@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { actionResetScore } from '../redux/actions/action';
 import Header from './Header';
+import '../css/FeedbackCss.css';
 
 class Feedback extends Component {
   componentDidMount() {
@@ -50,15 +51,15 @@ class Feedback extends Component {
     const { acertos, score } = this.props;
     const THREE_ASSERTIONS = 3;
     return (
-      <div>
+      <div className="divDisplay">
         <Header />
-        <h1>Feedback</h1>
-        <p>
+        <h1 className="classH1Feed">Feedback</h1>
+        <p className="classP">
           Acertos
           {' '}
           <span data-testid="feedback-total-question">{ acertos }</span>
         </p>
-        <h2>
+        <h2 className="classH2">
           Result:
           {' '}
           <span data-testid="feedback-text">
@@ -69,14 +70,15 @@ class Feedback extends Component {
             }
           </span>
         </h2>
-        <h1>
+        <h1 className="classH1">
           Total:
           {' '}
           <span data-testid="feedback-total-score">{score}</span>
         </h1>
 
-        <div>
+        <div className="divButton">
           <button
+            className="buttonClick"
             type="button"
             data-testid="btn-play-again"
             onClick={ this.handleButton }
@@ -85,6 +87,7 @@ class Feedback extends Component {
           </button>
           <Link to="/ranking">
             <button
+              className="buttonClick"
               type="button"
               data-testid="btn-ranking"
             >
